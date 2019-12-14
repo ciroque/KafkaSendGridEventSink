@@ -2,8 +2,9 @@ package main
 
 import (
 	config2 "KafkaSendGridEventSink/internal/config"
+	"KafkaSendGridEventSink/internal/processing"
 	"KafkaSendGridEventSink/internal/web"
-	"fmt"
+	"KafkaSendGridEventSink/pkg/eventing"
 	"github.com/Sirupsen/logrus"
 	"os"
 	"os/signal"
@@ -11,8 +12,9 @@ import (
 )
 
 type Main struct {
-	AbortChannel chan error
-	Settings     *config2.Settings
+	AbortChannel    chan error
+	ProducerChannel chan eventing.SendGridEvent
+	Settings        *config2.Settings
 }
 
 func main() {
@@ -22,30 +24,41 @@ func main() {
 	}
 
 	main := Main{
-		AbortChannel: make(chan error),
-		Settings:     settings,
+		AbortChannel:    make(chan error),
+		ProducerChannel: make(chan eventing.SendGridEvent),
+		Settings:        settings,
 	}
 
 	main.Run()
 }
 
+func (main *Main) startProcessingServer() {
+	producer := processing.Producer{
+		ProducerChannel: main.ProducerChannel,
+	}
+
+	go producer.Run()
+}
+
 func (main *Main) startWebServer() {
 	server := web.Server{
-		AbortChannel: main.AbortChannel,
-		Settings:     main.Settings,
+		AbortChannel:    main.AbortChannel,
+		ProducerChannel: main.ProducerChannel,
+		Settings:        main.Settings,
 	}
 
 	go server.Run()
 }
 
 func (main *Main) Run() {
+	main.startProcessingServer()
 	main.startWebServer()
 
 	sigTerm := make(chan os.Signal, 1)
 	signal.Notify(sigTerm, syscall.SIGTERM)
 	signal.Notify(sigTerm, syscall.SIGINT)
 
-	fmt.Println("Running...")
+	logrus.Info("Running, awaiting signal...")
 
 	select {
 	case <-sigTerm:

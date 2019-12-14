@@ -10,8 +10,9 @@ import (
 )
 
 type Server struct {
-	AbortChannel chan error
-	Settings     *config2.Settings
+	AbortChannel    chan error
+	ProducerChannel chan eventing.SendGridEvent
+	Settings        *config2.Settings
 }
 
 func (server *Server) Run() {
@@ -21,7 +22,7 @@ func (server *Server) Run() {
 	logrus.Info("Listening on ", address)
 	err := http.ListenAndServe(address, nil)
 	if err != nil {
-		server.AbortChannel <- fmt.Errorf("error starting http listener", err)
+		server.AbortChannel <- fmt.Errorf("error starting http listener, %v", err)
 	}
 }
 
@@ -41,10 +42,12 @@ func (server *Server) handleEmailEvent(writer http.ResponseWriter, request *http
 				return
 			}
 
-			fmt.Printf("Got a thing: %#v", event)
+			logrus.Info("An event was posted: %v", event)
+
+			server.ProducerChannel <- event
 
 			writer.WriteHeader(http.StatusAccepted)
-			fmt.Fprint(writer, "Accepted for processing")
+			fmt.Fprint(writer, "Accepted")
 		}
 	default:
 		writer.WriteHeader(http.StatusMethodNotAllowed)
