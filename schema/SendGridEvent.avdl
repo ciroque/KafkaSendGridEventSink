@@ -1,0 +1,32 @@
+/*
+ * Full reference: https://sendgrid.com/docs/for-developers/tracking-events/event/
+ *
+ * Edit this file and use the following command to generate the Avro schema files...
+ * java -jar C:\Windows\System32\avro-tools-1.9.1.jar idl2schemata schema\SendGridEvent.avdl schema\
+ *
+ * After that run the following command to generate the Go files...
+ * gogen-avro --package=eventing pkg\eventing\event schema\SendGridEvent.avsc
+ */
+
+@namespace("xyz.atavachron")
+protocol SendGridEventNotification {
+  record SendGridEvent {
+    string email;
+    string event;
+    int event_timestamp;
+    string smtp_id;
+    string useragent;
+    string ip;
+    string sg_event_id;
+    string sg_message_id;
+    string reason;
+    string status;
+    string response;
+    boolean tls;
+    string url;
+    string urloffset;
+    int attempt;
+    string category;
+    string type;
+  }
+}

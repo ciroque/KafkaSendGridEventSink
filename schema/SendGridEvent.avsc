@@ -1,0 +1,57 @@
+{
+  "type" : "record",
+  "name" : "SendGridEvent",
+  "namespace" : "xyz.atavachron",
+  "fields" : [ {
+    "name" : "email",
+    "type" : "string"
+  }, {
+    "name" : "event",
+    "type" : "string"
+  }, {
+    "name" : "event_timestamp",
+    "type" : "int"
+  }, {
+    "name" : "smtp_id",
+    "type" : "string"
+  }, {
+    "name" : "useragent",
+    "type" : "string"
+  }, {
+    "name" : "ip",
+    "type" : "string"
+  }, {
+    "name" : "sg_event_id",
+    "type" : "string"
+  }, {
+    "name" : "sg_message_id",
+    "type" : "string"
+  }, {
+    "name" : "reason",
+    "type" : "string"
+  }, {
+    "name" : "status",
+    "type" : "string"
+  }, {
+    "name" : "response",
+    "type" : "string"
+  }, {
+    "name" : "tls",
+    "type" : "boolean"
+  }, {
+    "name" : "url",
+    "type" : "string"
+  }, {
+    "name" : "urloffset",
+    "type" : "string"
+  }, {
+    "name" : "attempt",
+    "type" : "int"
+  }, {
+    "name" : "category",
+    "type" : "string"
+  }, {
+    "name" : "type",
+    "type" : "string"
+  } ]
+}
