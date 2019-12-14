@@ -6,103 +6,49 @@
 package eventing
 
 import (
-	"io"
-	"github.com/actgardner/gogen-avro/vm/types"
-	"github.com/actgardner/gogen-avro/vm"
 	"github.com/actgardner/gogen-avro/compiler"
+	"github.com/actgardner/gogen-avro/vm"
+	"github.com/actgardner/gogen-avro/vm/types"
+	"io"
 )
 
-  
 type SendGridEvent struct {
+	Email string
 
-	
-	
-		Email string
-	
+	Event string
 
-	
-	
-		Event string
-	
+	Timestamp int32
 
-	
-	
-		Event_timestamp int32
-	
+	Smtp_id string
 
-	
-	
-		Smtp_id string
-	
+	Useragent string
 
-	
-	
-		Useragent string
-	
+	Ip string
 
-	
-	
-		Ip string
-	
+	Sg_event_id string
 
-	
-	
-		Sg_event_id string
-	
+	Sg_message_id string
 
-	
-	
-		Sg_message_id string
-	
+	Reason string
 
-	
-	
-		Reason string
-	
+	Status string
 
-	
-	
-		Status string
-	
+	Response string
 
-	
-	
-		Response string
-	
+	Tls bool
 
-	
-	
-		Tls bool
-	
+	Url string
 
-	
-	
-		Url string
-	
+	Urloffset string
 
-	
-	
-		Urloffset string
-	
+	Attempt int32
 
-	
-	
-		Attempt int32
-	
+	Category string
 
-	
-	
-		Category string
-	
-
-	
-	
-		Type string
-	
-
+	Type string
 }
 
-func NewSendGridEvent() (*SendGridEvent) {
+func NewSendGridEvent() *SendGridEvent {
 	return &SendGridEvent{}
 }
 
@@ -115,7 +61,7 @@ func DeserializeSendGridEvent(r io.Reader) (*SendGridEvent, error) {
 
 	err = vm.Eval(r, deser, t)
 	if err != nil {
-		return nil, err	
+		return nil, err
 	}
 	return t, err
 }
@@ -130,99 +76,99 @@ func DeserializeSendGridEventFromSchema(r io.Reader, schema string) (*SendGridEv
 
 	err = vm.Eval(r, deser, t)
 	if err != nil {
-		return nil, err	
+		return nil, err
 	}
 	return t, err
 }
 
 func writeSendGridEvent(r *SendGridEvent, w io.Writer) error {
 	var err error
-	
-	err = vm.WriteString( r.Email, w)
+
+	err = vm.WriteString(r.Email, w)
 	if err != nil {
-		return err			
+		return err
 	}
-	
-	err = vm.WriteString( r.Event, w)
+
+	err = vm.WriteString(r.Event, w)
 	if err != nil {
-		return err			
+		return err
 	}
-	
-	err = vm.WriteInt( r.Event_timestamp, w)
+
+	err = vm.WriteInt(r.Timestamp, w)
 	if err != nil {
-		return err			
+		return err
 	}
-	
-	err = vm.WriteString( r.Smtp_id, w)
+
+	err = vm.WriteString(r.Smtp_id, w)
 	if err != nil {
-		return err			
+		return err
 	}
-	
-	err = vm.WriteString( r.Useragent, w)
+
+	err = vm.WriteString(r.Useragent, w)
 	if err != nil {
-		return err			
+		return err
 	}
-	
-	err = vm.WriteString( r.Ip, w)
+
+	err = vm.WriteString(r.Ip, w)
 	if err != nil {
-		return err			
+		return err
 	}
-	
-	err = vm.WriteString( r.Sg_event_id, w)
+
+	err = vm.WriteString(r.Sg_event_id, w)
 	if err != nil {
-		return err			
+		return err
 	}
-	
-	err = vm.WriteString( r.Sg_message_id, w)
+
+	err = vm.WriteString(r.Sg_message_id, w)
 	if err != nil {
-		return err			
+		return err
 	}
-	
-	err = vm.WriteString( r.Reason, w)
+
+	err = vm.WriteString(r.Reason, w)
 	if err != nil {
-		return err			
+		return err
 	}
-	
-	err = vm.WriteString( r.Status, w)
+
+	err = vm.WriteString(r.Status, w)
 	if err != nil {
-		return err			
+		return err
 	}
-	
-	err = vm.WriteString( r.Response, w)
+
+	err = vm.WriteString(r.Response, w)
 	if err != nil {
-		return err			
+		return err
 	}
-	
-	err = vm.WriteBool( r.Tls, w)
+
+	err = vm.WriteBool(r.Tls, w)
 	if err != nil {
-		return err			
+		return err
 	}
-	
-	err = vm.WriteString( r.Url, w)
+
+	err = vm.WriteString(r.Url, w)
 	if err != nil {
-		return err			
+		return err
 	}
-	
-	err = vm.WriteString( r.Urloffset, w)
+
+	err = vm.WriteString(r.Urloffset, w)
 	if err != nil {
-		return err			
+		return err
 	}
-	
-	err = vm.WriteInt( r.Attempt, w)
+
+	err = vm.WriteInt(r.Attempt, w)
 	if err != nil {
-		return err			
+		return err
 	}
-	
-	err = vm.WriteString( r.Category, w)
+
+	err = vm.WriteString(r.Category, w)
 	if err != nil {
-		return err			
+		return err
 	}
-	
-	err = vm.WriteString( r.Type, w)
+
+	err = vm.WriteString(r.Type, w)
 	if err != nil {
-		return err			
+		return err
 	}
-	
+
 	return err
 }
 
@@ -231,172 +177,104 @@ func (r *SendGridEvent) Serialize(w io.Writer) error {
 }
 
 func (r *SendGridEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"event\",\"type\":\"string\"},{\"name\":\"event_timestamp\",\"type\":\"int\"},{\"name\":\"smtp_id\",\"type\":\"string\"},{\"name\":\"useragent\",\"type\":\"string\"},{\"name\":\"ip\",\"type\":\"string\"},{\"name\":\"sg_event_id\",\"type\":\"string\"},{\"name\":\"sg_message_id\",\"type\":\"string\"},{\"name\":\"reason\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"response\",\"type\":\"string\"},{\"name\":\"tls\",\"type\":\"boolean\"},{\"name\":\"url\",\"type\":\"string\"},{\"name\":\"urloffset\",\"type\":\"string\"},{\"name\":\"attempt\",\"type\":\"int\"},{\"name\":\"category\",\"type\":\"string\"},{\"name\":\"type\",\"type\":\"string\"}],\"name\":\"SendGridEvent\",\"namespace\":\"xyz.atavachron\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"event\",\"type\":\"string\"},{\"name\":\"timestamp\",\"type\":\"int\"},{\"name\":\"smtp_id\",\"type\":\"string\"},{\"name\":\"useragent\",\"type\":\"string\"},{\"name\":\"ip\",\"type\":\"string\"},{\"name\":\"sg_event_id\",\"type\":\"string\"},{\"name\":\"sg_message_id\",\"type\":\"string\"},{\"name\":\"reason\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"response\",\"type\":\"string\"},{\"name\":\"tls\",\"type\":\"boolean\"},{\"name\":\"url\",\"type\":\"string\"},{\"name\":\"urloffset\",\"type\":\"string\"},{\"name\":\"attempt\",\"type\":\"int\"},{\"name\":\"category\",\"type\":\"string\"},{\"name\":\"type\",\"type\":\"string\"}],\"name\":\"SendGridEvent\",\"namespace\":\"xyz.atavachron\",\"type\":\"record\"}"
 }
 
 func (r *SendGridEvent) SchemaName() string {
 	return "xyz.atavachron.SendGridEvent"
 }
 
-func (_ *SendGridEvent) SetBoolean(v bool) { panic("Unsupported operation") }
-func (_ *SendGridEvent) SetInt(v int32) { panic("Unsupported operation") }
-func (_ *SendGridEvent) SetLong(v int64) { panic("Unsupported operation") }
-func (_ *SendGridEvent) SetFloat(v float32) { panic("Unsupported operation") }
-func (_ *SendGridEvent) SetDouble(v float64) { panic("Unsupported operation") }
-func (_ *SendGridEvent) SetBytes(v []byte) { panic("Unsupported operation") }
-func (_ *SendGridEvent) SetString(v string) { panic("Unsupported operation") }
+func (_ *SendGridEvent) SetBoolean(v bool)    { panic("Unsupported operation") }
+func (_ *SendGridEvent) SetInt(v int32)       { panic("Unsupported operation") }
+func (_ *SendGridEvent) SetLong(v int64)      { panic("Unsupported operation") }
+func (_ *SendGridEvent) SetFloat(v float32)   { panic("Unsupported operation") }
+func (_ *SendGridEvent) SetDouble(v float64)  { panic("Unsupported operation") }
+func (_ *SendGridEvent) SetBytes(v []byte)    { panic("Unsupported operation") }
+func (_ *SendGridEvent) SetString(v string)   { panic("Unsupported operation") }
 func (_ *SendGridEvent) SetUnionElem(v int64) { panic("Unsupported operation") }
 
 func (r *SendGridEvent) Get(i int) types.Field {
-	switch (i) {
-	
+	switch i {
+
 	case 0:
-		
-		
-			return (*types.String)(&r.Email)
-		
-	
+
+		return (*types.String)(&r.Email)
+
 	case 1:
-		
-		
-			return (*types.String)(&r.Event)
-		
-	
+
+		return (*types.String)(&r.Event)
+
 	case 2:
-		
-		
-			return (*types.Int)(&r.Event_timestamp)
-		
-	
+
+		return (*types.Int)(&r.Timestamp)
+
 	case 3:
-		
-		
-			return (*types.String)(&r.Smtp_id)
-		
-	
+
+		return (*types.String)(&r.Smtp_id)
+
 	case 4:
-		
-		
-			return (*types.String)(&r.Useragent)
-		
-	
+
+		return (*types.String)(&r.Useragent)
+
 	case 5:
-		
-		
-			return (*types.String)(&r.Ip)
-		
-	
+
+		return (*types.String)(&r.Ip)
+
 	case 6:
-		
-		
-			return (*types.String)(&r.Sg_event_id)
-		
-	
+
+		return (*types.String)(&r.Sg_event_id)
+
 	case 7:
-		
-		
-			return (*types.String)(&r.Sg_message_id)
-		
-	
+
+		return (*types.String)(&r.Sg_message_id)
+
 	case 8:
-		
-		
-			return (*types.String)(&r.Reason)
-		
-	
+
+		return (*types.String)(&r.Reason)
+
 	case 9:
-		
-		
-			return (*types.String)(&r.Status)
-		
-	
+
+		return (*types.String)(&r.Status)
+
 	case 10:
-		
-		
-			return (*types.String)(&r.Response)
-		
-	
+
+		return (*types.String)(&r.Response)
+
 	case 11:
-		
-		
-			return (*types.Boolean)(&r.Tls)
-		
-	
+
+		return (*types.Boolean)(&r.Tls)
+
 	case 12:
-		
-		
-			return (*types.String)(&r.Url)
-		
-	
+
+		return (*types.String)(&r.Url)
+
 	case 13:
-		
-		
-			return (*types.String)(&r.Urloffset)
-		
-	
+
+		return (*types.String)(&r.Urloffset)
+
 	case 14:
-		
-		
-			return (*types.Int)(&r.Attempt)
-		
-	
+
+		return (*types.Int)(&r.Attempt)
+
 	case 15:
-		
-		
-			return (*types.String)(&r.Category)
-		
-	
+
+		return (*types.String)(&r.Category)
+
 	case 16:
-		
-		
-			return (*types.String)(&r.Type)
-		
-	
+
+		return (*types.String)(&r.Type)
+
 	}
 	panic("Unknown field index")
 }
 
 func (r *SendGridEvent) SetDefault(i int) {
-	switch (i) {
-	
-        
-	
-        
-	
-        
-	
-        
-	
-        
-	
-        
-	
-        
-	
-        
-	
-        
-	
-        
-	
-        
-	
-        
-	
-        
-	
-        
-	
-        
-	
-        
-	
-        
-	
+	switch i {
+
 	}
 	panic("Unknown field index")
 }
 
 func (_ *SendGridEvent) AppendMap(key string) types.Field { panic("Unsupported operation") }
-func (_ *SendGridEvent) AppendArray() types.Field { panic("Unsupported operation") }
-func (_ *SendGridEvent) Finalize() { }
+func (_ *SendGridEvent) AppendArray() types.Field         { panic("Unsupported operation") }
+func (_ *SendGridEvent) Finalize()                        {}

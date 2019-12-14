@@ -9,7 +9,7 @@
     "name" : "event",
     "type" : "string"
   }, {
-    "name" : "event_timestamp",
+    "name" : "timestamp",
     "type" : "int"
   }, {
     "name" : "smtp_id",
