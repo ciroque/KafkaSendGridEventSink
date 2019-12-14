@@ -1,0 +1,28 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.9
+    environment:
+      GOPATH: /go
+    working_directory: /go/src/kafka-sendgrid-event-sink
+    steps:
+      - checkout
+      - run: env && sort
+      - run: go get -v -t -d ./...
+      - run: go test -v ./...
+      - type: setup-docker-engine
+        reusable: true
+        version: 17.06.0-ce
+      - run:
+          name: Build docker image and publish image tagged with commit
+          command: |
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker build -t ciroque/$CIRCLE_PROJECT_REPONAME:latest .
+            docker push ciroque/kafka-sendgrid-event-sink:latest
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build:
+          context: org-global
