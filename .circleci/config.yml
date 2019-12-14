@@ -19,9 +19,9 @@ jobs:
           command: |
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
             docker build -t ciroque/kafka-sendgrid-event-sink:latest .
-            docker build -t ciroque/kafka-sendgrid-event-sink:$CIRCLE_SHA1 .
             docker push ciroque/kafka-sendgrid-event-sink:latest
-            docker push ciroque/kafka-sendgrid-event-sink:$CIRCLE_SHA1
+            docker build -t ciroque/kafka-sendgrid-event-sink:$CIRCLE_BUILD_NUM-$CIRCLE_SHA1 .
+            docker push ciroque/kafka-sendgrid-event-sink:$CIRCLE_BUILD_NUM-$CIRCLE_SHA1
 workflows:
   version: 2
   build:
