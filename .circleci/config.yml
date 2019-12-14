@@ -5,7 +5,7 @@ jobs:
       - image: circleci/golang:1.9
     environment:
       GOPATH: /go
-    working_directory: /go/src/kafka-sendgrid-event-sink
+    working_directory: /go/src/KafkaSendGridEventSink/
     steps:
       - checkout
       - run: env && sort
@@ -19,7 +19,9 @@ jobs:
           command: |
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
             docker build -t ciroque/$CIRCLE_PROJECT_REPONAME:latest .
+            docker build -t ciroque/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1 .
             docker push ciroque/kafka-sendgrid-event-sink:latest
+            docker push ciroque/kafka-sendgrid-event-sink:$CIRCLE_SHA1
 workflows:
   version: 2
   build:
