@@ -12,8 +12,8 @@
 protocol SendGridEventNotification {
   record SendGridEvent {
     string email;
-    string event;
     int timestamp;
+    string event;
     string smtp_id;
     string useragent;
     string ip;
@@ -28,5 +28,6 @@ protocol SendGridEventNotification {
     int attempt;
     string category;
     string type;
+    string asm_group_id;
   }
 }

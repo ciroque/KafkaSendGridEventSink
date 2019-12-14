@@ -15,9 +15,9 @@ import (
 type SendGridEvent struct {
 	Email string
 
-	Event string
-
 	Timestamp int32
+
+	Event string
 
 	Smtp_id string
 
@@ -46,6 +46,8 @@ type SendGridEvent struct {
 	Category string
 
 	Type string
+
+	Asm_group_id string
 }
 
 func NewSendGridEvent() *SendGridEvent {
@@ -89,12 +91,12 @@ func writeSendGridEvent(r *SendGridEvent, w io.Writer) error {
 		return err
 	}
 
-	err = vm.WriteString(r.Event, w)
+	err = vm.WriteInt(r.Timestamp, w)
 	if err != nil {
 		return err
 	}
 
-	err = vm.WriteInt(r.Timestamp, w)
+	err = vm.WriteString(r.Event, w)
 	if err != nil {
 		return err
 	}
@@ -169,6 +171,11 @@ func writeSendGridEvent(r *SendGridEvent, w io.Writer) error {
 		return err
 	}
 
+	err = vm.WriteString(r.Asm_group_id, w)
+	if err != nil {
+		return err
+	}
+
 	return err
 }
 
@@ -177,7 +184,7 @@ func (r *SendGridEvent) Serialize(w io.Writer) error {
 }
 
 func (r *SendGridEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"event\",\"type\":\"string\"},{\"name\":\"timestamp\",\"type\":\"int\"},{\"name\":\"smtp_id\",\"type\":\"string\"},{\"name\":\"useragent\",\"type\":\"string\"},{\"name\":\"ip\",\"type\":\"string\"},{\"name\":\"sg_event_id\",\"type\":\"string\"},{\"name\":\"sg_message_id\",\"type\":\"string\"},{\"name\":\"reason\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"response\",\"type\":\"string\"},{\"name\":\"tls\",\"type\":\"boolean\"},{\"name\":\"url\",\"type\":\"string\"},{\"name\":\"urloffset\",\"type\":\"string\"},{\"name\":\"attempt\",\"type\":\"int\"},{\"name\":\"category\",\"type\":\"string\"},{\"name\":\"type\",\"type\":\"string\"}],\"name\":\"SendGridEvent\",\"namespace\":\"xyz.atavachron\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"timestamp\",\"type\":\"int\"},{\"name\":\"event\",\"type\":\"string\"},{\"name\":\"smtp_id\",\"type\":\"string\"},{\"name\":\"useragent\",\"type\":\"string\"},{\"name\":\"ip\",\"type\":\"string\"},{\"name\":\"sg_event_id\",\"type\":\"string\"},{\"name\":\"sg_message_id\",\"type\":\"string\"},{\"name\":\"reason\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"response\",\"type\":\"string\"},{\"name\":\"tls\",\"type\":\"boolean\"},{\"name\":\"url\",\"type\":\"string\"},{\"name\":\"urloffset\",\"type\":\"string\"},{\"name\":\"attempt\",\"type\":\"int\"},{\"name\":\"category\",\"type\":\"string\"},{\"name\":\"type\",\"type\":\"string\"},{\"name\":\"asm_group_id\",\"type\":\"string\"}],\"name\":\"SendGridEvent\",\"namespace\":\"xyz.atavachron\",\"type\":\"record\"}"
 }
 
 func (r *SendGridEvent) SchemaName() string {
@@ -202,11 +209,11 @@ func (r *SendGridEvent) Get(i int) types.Field {
 
 	case 1:
 
-		return (*types.String)(&r.Event)
+		return (*types.Int)(&r.Timestamp)
 
 	case 2:
 
-		return (*types.Int)(&r.Timestamp)
+		return (*types.String)(&r.Event)
 
 	case 3:
 
@@ -263,6 +270,10 @@ func (r *SendGridEvent) Get(i int) types.Field {
 	case 16:
 
 		return (*types.String)(&r.Type)
+
+	case 17:
+
+		return (*types.String)(&r.Asm_group_id)
 
 	}
 	panic("Unknown field index")

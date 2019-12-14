@@ -6,11 +6,11 @@
     "name" : "email",
     "type" : "string"
   }, {
-    "name" : "event",
-    "type" : "string"
-  }, {
     "name" : "timestamp",
     "type" : "int"
+  }, {
+    "name" : "event",
+    "type" : "string"
   }, {
     "name" : "smtp_id",
     "type" : "string"
@@ -52,6 +52,9 @@
     "type" : "string"
   }, {
     "name" : "type",
+    "type" : "string"
+  }, {
+    "name" : "asm_group_id",
     "type" : "string"
   } ]
 }
