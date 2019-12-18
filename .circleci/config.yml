@@ -18,7 +18,7 @@ jobs:
             cd librdkafka && \
             ./configure --prefix /usr && \
             make && \
-            make install
+            sudo make install
       - run: go get -v -t -d ./...
       - run: go test -v ./...
       - type: setup-docker-engine
