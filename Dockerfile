@@ -5,10 +5,15 @@ FROM golang:alpine AS builder
 
 # Install git.
 # Git is required for fetching the dependencies.
-RUN apk update && apk add --no-cache git tree pkgconf
+RUN apk update && apk add --no-cache git pkgconfig bash build-base
+RUN git clone https://github.com/edenhill/librdkafka.git && \
+	cd librdkafka && \
+	./configure --prefix /usr && \
+	make && \
+	make install
+
 WORKDIR $GOPATH/src/KafkaSendGridEventSink/
 COPY . .
-RUN pwd && tree
 
 # Fetch dependencies.
 # Using go get.
