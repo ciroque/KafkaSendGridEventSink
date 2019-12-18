@@ -8,7 +8,7 @@ jobs:
     working_directory: /go/src/KafkaSendGridEventSink/
     steps:
       - checkout
-      - run: apk update && apk add --no-cache pkgconf
+      - run: apt-get update && apt-get add --no-cache pkgconf
       - run: go get -v -t -d ./...
       - run: go test -v ./...
       - type: setup-docker-engine
