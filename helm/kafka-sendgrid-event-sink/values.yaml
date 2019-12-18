@@ -32,7 +32,7 @@ securityContext: {}
   # runAsUser: 1000
 
 kafka:
-  bootstrapServers: localhost:9092
+  bootstrapServers: 10.43.27.52:9092
   topic: request-email-delivery
 
 service:

@@ -29,17 +29,14 @@ func main() {
 		Settings:        settings,
 	}
 
-	defer close(main.AbortChannel)
-	defer close(main.ProducerChannel)
-
 	main.Run()
 }
 
 func (main *Main) startProcessingServer() {
 	producer := event.Writer{
-		AbortChannel: main.AbortChannel,
-		EventChannel: main.ProducerChannel,
-		Settings:     main.Settings,
+		AbortChannel:    main.AbortChannel,
+		ProducerChannel: main.ProducerChannel,
+		Settings:        main.Settings,
 	}
 
 	go producer.Run()
@@ -68,6 +65,7 @@ func (main *Main) Run() {
 	select {
 	case <-sigTerm:
 		{
+			close(main.ProducerChannel)
 			logrus.Info("Exiting per SIGTERM")
 		}
 	case err := <-main.AbortChannel:
