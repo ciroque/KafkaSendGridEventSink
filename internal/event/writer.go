@@ -4,22 +4,20 @@ import (
 	"KafkaSendGridEventSink/internal/config"
 	"KafkaSendGridEventSink/pkg/eventing"
 	"bytes"
-	"fmt"
 	"github.com/Sirupsen/logrus"
 	"gopkg.in/confluentinc/confluent-kafka-go.v1/kafka"
 )
 
 type Writer struct {
 	AbortChannel chan error
-	EventChannel chan eventing.SendGridEvent
+	EventChannel chan []eventing.SendGridEvent
 	Producer     *kafka.Producer
 	Settings     *config.Settings
 }
 
 func (writer *Writer) Run() {
-	bootstrapServers := "192.168.0.2"
 	configMap := kafka.ConfigMap{
-		"bootstrap.servers": bootstrapServers,
+		"bootstrap.servers": writer.Settings.KafkaBootstrapServers,
 	}
 
 	logrus.Info("the kafka configMap: %v", configMap)
@@ -34,32 +32,53 @@ func (writer *Writer) Run() {
 
 	writer.Producer = p
 
-	logrus.Info("Writer running...")
+	logrus.Info("Writer running.")
 
-	for sendGridEvent := range writer.EventChannel {
-		logrus.Info("Received an event: %v", sendGridEvent)
-		go writer.produce(sendGridEvent)
+	go writer.deliveryReporter()
+
+	for events := range writer.EventChannel {
+		go writer.produce(events)
 	}
 }
 
-func (writer *Writer) produce(event eventing.SendGridEvent) {
-	logrus.Info("Producing an event: %#v", event)
+func (writer *Writer) deliveryReporter() {
+	logrus.Info("Delivery Reporter running.")
+	for event := range writer.Producer.Events() {
+		switch ev := event.(type) {
+		case *kafka.Message:
+			if ev.TopicPartition.Error == nil {
 
-	var binary bytes.Buffer
-	if err := event.Serialize(&binary); err != nil {
-		logrus.Errorf("error getting Codec for schema, %v", err)
-		return
+			} else {
+				logrus.Infof(
+					"Message Delivered. Topic(%v) Partition(%v) Offset(%v)",
+					*ev.TopicPartition.Topic,
+					ev.TopicPartition.Partition,
+					ev.TopicPartition.Offset,
+				)
+			}
+		default:
+			logrus.Infof("Ignored event: %v", ev)
+		}
 	}
+	logrus.Info("Delivery Reporter terminating.")
+}
 
-	logrus.Infof("the binary: %v : %v", binary, len(binary.Bytes()))
+func (writer *Writer) produce(events []eventing.SendGridEvent) {
+	for _, event := range events {
+		logrus.Infof("Producing an event: %#v", events)
+		var binary bytes.Buffer
+		if err := event.Serialize(&binary); err != nil {
+			logrus.Errorf("error serializing the message, %v", err)
+			return
+		}
 
-	topic := "test"
+		logrus.Debugf("the binary: %v : %v", binary, len(binary.Bytes()))
 
-	err := writer.Producer.Produce(&kafka.Message{
-		TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
-		Value:          binary.Bytes(),
-	}, nil)
-	if err != nil {
-		logrus.Error(fmt.Errorf("error writing to topic, %v", err))
+		message := &kafka.Message{
+			TopicPartition: kafka.TopicPartition{Topic: &writer.Settings.KafkaTopic, Partition: kafka.PartitionAny},
+			Value:          binary.Bytes(),
+		}
+
+		writer.Producer.ProduceChannel() <- message
 	}
 }

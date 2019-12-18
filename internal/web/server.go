@@ -11,7 +11,7 @@ import (
 
 type Server struct {
 	AbortChannel    chan error
-	ProducerChannel chan eventing.SendGridEvent
+	ProducerChannel chan []eventing.SendGridEvent
 	Settings        *config2.Settings
 }
 
@@ -34,17 +34,17 @@ func (server *Server) handleEmailEvent(writer http.ResponseWriter, request *http
 	switch request.Method {
 	case http.MethodPost:
 		{
-			var event eventing.SendGridEvent
-			err := json.NewDecoder(request.Body).Decode(&event)
+			var events []eventing.SendGridEvent
+			err := json.NewDecoder(request.Body).Decode(&events)
 			if err != nil {
 				writer.WriteHeader(http.StatusBadRequest)
 				fmt.Fprintf(writer, err.Error())
 				return
 			}
 
-			logrus.Info("An event was posted: %v", event)
+			logrus.Infof("Received events: %v", events)
 
-			server.ProducerChannel <- event
+			server.ProducerChannel <- events
 
 			writer.WriteHeader(http.StatusAccepted)
 			fmt.Fprint(writer, "Accepted")

@@ -13,7 +13,7 @@ import (
 
 type Main struct {
 	AbortChannel    chan error
-	ProducerChannel chan eventing.SendGridEvent
+	ProducerChannel chan []eventing.SendGridEvent
 	Settings        *config2.Settings
 }
 
@@ -25,7 +25,7 @@ func main() {
 
 	main := Main{
 		AbortChannel:    make(chan error),
-		ProducerChannel: make(chan eventing.SendGridEvent),
+		ProducerChannel: make(chan []eventing.SendGridEvent),
 		Settings:        settings,
 	}
 
@@ -63,7 +63,7 @@ func (main *Main) Run() {
 	signal.Notify(sigTerm, syscall.SIGTERM)
 	signal.Notify(sigTerm, syscall.SIGINT)
 
-	logrus.Info("Running, awaiting signal...")
+	logrus.Info("Running, awaiting signal.")
 
 	select {
 	case <-sigTerm:
