@@ -7,8 +7,10 @@ import (
 )
 
 type Settings struct {
-	Host                   string
-	Port                   int
+	Host                  string
+	Port                  int
+	KafkaBootstrapServers string
+	KafkaTopic            string
 }
 
 func NewSettings() (*Settings, error) {
@@ -27,7 +29,17 @@ func NewSettings() (*Settings, error) {
 		host = "0.0.0.0"
 	}
 
-	config := &Settings{host, nport}
+	kafkaBootstrapServers := os.Getenv("KAFKA_BOOTSTRAP_SERVERS")
+	if host == "" {
+		host = "localhost:9092"
+	}
+
+	kafkaTopic := os.Getenv("KAFKA_TOPIC")
+	if host == "" {
+		host = "test"
+	}
+
+	config := &Settings{host, nport, kafkaBootstrapServers, kafkaTopic}
 
 	return config, nil
 }

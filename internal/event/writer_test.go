@@ -1,4 +1,4 @@
-package processing
+package event
 
 import "testing"
 

@@ -2,7 +2,7 @@ package main
 
 import (
 	config2 "KafkaSendGridEventSink/internal/config"
-	"KafkaSendGridEventSink/internal/processing"
+	"KafkaSendGridEventSink/internal/event"
 	"KafkaSendGridEventSink/internal/web"
 	"KafkaSendGridEventSink/pkg/eventing"
 	"github.com/Sirupsen/logrus"
@@ -29,12 +29,17 @@ func main() {
 		Settings:        settings,
 	}
 
+	defer close(main.AbortChannel)
+	defer close(main.ProducerChannel)
+
 	main.Run()
 }
 
 func (main *Main) startProcessingServer() {
-	producer := processing.Producer{
-		ProducerChannel: main.ProducerChannel,
+	producer := event.Writer{
+		AbortChannel: main.AbortChannel,
+		EventChannel: main.ProducerChannel,
+		Settings:     main.Settings,
 	}
 
 	go producer.Run()
