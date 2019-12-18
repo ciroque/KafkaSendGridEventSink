@@ -5,7 +5,7 @@ FROM golang:alpine AS builder
 
 # Install git.
 # Git is required for fetching the dependencies.
-RUN apk update && apk add --no-cache git tree
+RUN apk update && apk add --no-cache git tree pkgconf
 WORKDIR $GOPATH/src/KafkaSendGridEventSink/
 COPY . .
 RUN pwd && tree
