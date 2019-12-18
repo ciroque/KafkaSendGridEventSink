@@ -22,7 +22,7 @@ RUN go get -d -v
 
 # Build the binary.
 WORKDIR $GOPATH/src/KafkaSendGridEventSink/
-RUN go build -o /go/bin/KafkaSendGridEventSink cmd/main/main.go
+RUN go build -tags static all -o /go/bin/KafkaSendGridEventSink cmd/main/main.go
 
 ############################
 # STEP 2 build a small image
