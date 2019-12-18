@@ -11,23 +11,23 @@
 @namespace("xyz.atavachron")
 protocol SendGridEventNotification {
   record SendGridEvent {
-    string email;
-    int timestamp;
-    string event;
-    string smtp_id;
-    string useragent;
-    string ip;
-    string sg_event_id;
-    string sg_message_id;
-    string reason;
-    string status;
-    string response;
-    boolean tls;
-    string url;
-    string urloffset;
-    int attempt;
-    string category;
-    string type;
-    string asm_group_id;
+    string email = "";
+    int timestamp = 0;
+    string event = "";
+    string smtp_id = "";
+    string useragent = "";
+    string ip = "";
+    string sg_event_id = "";
+    string sg_message_id = "";
+    string reason = "";
+    string status = "";
+    string response = "";
+    boolean tls = false;
+    string url = "";
+    string urloffset = "";
+    int attempt = 0;
+    string category = "";
+    string type = "";
+    string asm_group_id = "";
   }
 }

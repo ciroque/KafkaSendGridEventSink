@@ -4,57 +4,75 @@
   "namespace" : "xyz.atavachron",
   "fields" : [ {
     "name" : "email",
-    "type" : "string"
+    "type" : "string",
+    "default" : ""
   }, {
     "name" : "timestamp",
-    "type" : "int"
+    "type" : "int",
+    "default" : 0
   }, {
     "name" : "event",
-    "type" : "string"
+    "type" : "string",
+    "default" : ""
   }, {
     "name" : "smtp_id",
-    "type" : "string"
+    "type" : "string",
+    "default" : ""
   }, {
     "name" : "useragent",
-    "type" : "string"
+    "type" : "string",
+    "default" : ""
   }, {
     "name" : "ip",
-    "type" : "string"
+    "type" : "string",
+    "default" : ""
   }, {
     "name" : "sg_event_id",
-    "type" : "string"
+    "type" : "string",
+    "default" : ""
   }, {
     "name" : "sg_message_id",
-    "type" : "string"
+    "type" : "string",
+    "default" : ""
   }, {
     "name" : "reason",
-    "type" : "string"
+    "type" : "string",
+    "default" : ""
   }, {
     "name" : "status",
-    "type" : "string"
+    "type" : "string",
+    "default" : ""
   }, {
     "name" : "response",
-    "type" : "string"
+    "type" : "string",
+    "default" : ""
   }, {
     "name" : "tls",
-    "type" : "boolean"
+    "type" : "boolean",
+    "default" : false
   }, {
     "name" : "url",
-    "type" : "string"
+    "type" : "string",
+    "default" : ""
   }, {
     "name" : "urloffset",
-    "type" : "string"
+    "type" : "string",
+    "default" : ""
   }, {
     "name" : "attempt",
-    "type" : "int"
+    "type" : "int",
+    "default" : 0
   }, {
     "name" : "category",
-    "type" : "string"
+    "type" : "string",
+    "default" : ""
   }, {
     "name" : "type",
-    "type" : "string"
+    "type" : "string",
+    "default" : ""
   }, {
     "name" : "asm_group_id",
-    "type" : "string"
+    "type" : "string",
+    "default" : ""
   } ]
 }

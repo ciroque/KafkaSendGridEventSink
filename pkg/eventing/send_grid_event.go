@@ -184,7 +184,7 @@ func (r *SendGridEvent) Serialize(w io.Writer) error {
 }
 
 func (r *SendGridEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"timestamp\",\"type\":\"int\"},{\"name\":\"event\",\"type\":\"string\"},{\"name\":\"smtp_id\",\"type\":\"string\"},{\"name\":\"useragent\",\"type\":\"string\"},{\"name\":\"ip\",\"type\":\"string\"},{\"name\":\"sg_event_id\",\"type\":\"string\"},{\"name\":\"sg_message_id\",\"type\":\"string\"},{\"name\":\"reason\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"response\",\"type\":\"string\"},{\"name\":\"tls\",\"type\":\"boolean\"},{\"name\":\"url\",\"type\":\"string\"},{\"name\":\"urloffset\",\"type\":\"string\"},{\"name\":\"attempt\",\"type\":\"int\"},{\"name\":\"category\",\"type\":\"string\"},{\"name\":\"type\",\"type\":\"string\"},{\"name\":\"asm_group_id\",\"type\":\"string\"}],\"name\":\"SendGridEvent\",\"namespace\":\"xyz.atavachron\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":\"\",\"name\":\"email\",\"type\":\"string\"},{\"default\":0,\"name\":\"timestamp\",\"type\":\"int\"},{\"default\":\"\",\"name\":\"event\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"smtp_id\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"useragent\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ip\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"sg_event_id\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"sg_message_id\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"reason\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"status\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"response\",\"type\":\"string\"},{\"default\":false,\"name\":\"tls\",\"type\":\"boolean\"},{\"default\":\"\",\"name\":\"url\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"urloffset\",\"type\":\"string\"},{\"default\":0,\"name\":\"attempt\",\"type\":\"int\"},{\"default\":\"\",\"name\":\"category\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"type\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"asm_group_id\",\"type\":\"string\"}],\"name\":\"SendGridEvent\",\"namespace\":\"xyz.atavachron\",\"type\":\"record\"}"
 }
 
 func (r *SendGridEvent) SchemaName() string {
@@ -281,6 +281,78 @@ func (r *SendGridEvent) Get(i int) types.Field {
 
 func (r *SendGridEvent) SetDefault(i int) {
 	switch i {
+
+	case 0:
+		r.Email = ""
+		return
+
+	case 1:
+		r.Timestamp = 0
+		return
+
+	case 2:
+		r.Event = ""
+		return
+
+	case 3:
+		r.Smtp_id = ""
+		return
+
+	case 4:
+		r.Useragent = ""
+		return
+
+	case 5:
+		r.Ip = ""
+		return
+
+	case 6:
+		r.Sg_event_id = ""
+		return
+
+	case 7:
+		r.Sg_message_id = ""
+		return
+
+	case 8:
+		r.Reason = ""
+		return
+
+	case 9:
+		r.Status = ""
+		return
+
+	case 10:
+		r.Response = ""
+		return
+
+	case 11:
+		r.Tls = false
+		return
+
+	case 12:
+		r.Url = ""
+		return
+
+	case 13:
+		r.Urloffset = ""
+		return
+
+	case 14:
+		r.Attempt = 0
+		return
+
+	case 15:
+		r.Category = ""
+		return
+
+	case 16:
+		r.Type = ""
+		return
+
+	case 17:
+		r.Asm_group_id = ""
+		return
 
 	}
 	panic("Unknown field index")
