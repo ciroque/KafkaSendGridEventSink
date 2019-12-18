@@ -2,13 +2,13 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/golang:1.9
+      - image: circleci/golang:1.9-jessie
     environment:
       GOPATH: /go
     working_directory: /go/src/KafkaSendGridEventSink/
     steps:
       - checkout
-      - run: sudo apt-get update -y && sudo apt-get install -y pkg-conf
+      - run: sudo apt-get update -y && sudo apt-get install -y pkgconf
       - run: go get -v -t -d ./...
       - run: go test -v ./...
       - type: setup-docker-engine
