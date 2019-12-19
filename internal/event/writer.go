@@ -49,14 +49,14 @@ func (writer *Writer) deliveryReporter() {
 		switch ev := event.(type) {
 		case *kafka.Message:
 			if ev.TopicPartition.Error == nil {
-
-			} else {
 				logrus.Infof(
 					"Message Delivered. Topic(%v) Partition(%v) Offset(%v)",
 					*ev.TopicPartition.Topic,
 					ev.TopicPartition.Partition,
 					ev.TopicPartition.Offset,
 				)
+			} else {
+				logrus.Errorf("Failed to deliver Message: %v", ev.TopicPartition.Error)
 			}
 		default:
 			logrus.Infof("Ignored event: %v", ev)
