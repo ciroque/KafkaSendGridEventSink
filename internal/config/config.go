@@ -30,13 +30,13 @@ func NewSettings() (*Settings, error) {
 	}
 
 	kafkaBootstrapServers := os.Getenv("KAFKA_BOOTSTRAP_SERVERS")
-	if host == "" {
-		host = "localhost:9092"
+	if kafkaBootstrapServers == "" {
+		kafkaBootstrapServers = "localhost:9092"
 	}
 
 	kafkaTopic := os.Getenv("KAFKA_TOPIC")
-	if host == "" {
-		host = "test"
+	if kafkaTopic == "" {
+		kafkaTopic = "test"
 	}
 
 	config := &Settings{host, nport, kafkaBootstrapServers, kafkaTopic}
