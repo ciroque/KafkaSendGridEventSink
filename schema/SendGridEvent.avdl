@@ -25,9 +25,9 @@ protocol SendGridEventNotification {
     boolean tls = false;
     string url = "";
     string urloffset = "";
-    long attempt = 0;
+    string attempt = "";
     string category = "";
     string type = "";
-    string asm_group_id = "";
+    long asm_group_id = 0;
   }
 }
