@@ -12,7 +12,7 @@
 protocol SendGridEventNotification {
   record SendGridEvent {
     string email = "";
-    int timestamp = 0;
+    long timestamp = 0;
     string event = "";
     string smtp_id = "";
     string useragent = "";
@@ -25,7 +25,7 @@ protocol SendGridEventNotification {
     boolean tls = false;
     string url = "";
     string urloffset = "";
-    int attempt = 0;
+    long attempt = 0;
     string category = "";
     string type = "";
     string asm_group_id = "";

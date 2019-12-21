@@ -8,7 +8,7 @@
     "default" : ""
   }, {
     "name" : "timestamp",
-    "type" : "int",
+    "type" : "long",
     "default" : 0
   }, {
     "name" : "event",
@@ -60,7 +60,7 @@
     "default" : ""
   }, {
     "name" : "attempt",
-    "type" : "int",
+    "type" : "long",
     "default" : 0
   }, {
     "name" : "category",

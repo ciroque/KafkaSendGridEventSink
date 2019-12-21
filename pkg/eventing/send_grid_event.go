@@ -15,7 +15,7 @@ import (
 type SendGridEvent struct {
 	Email string
 
-	Timestamp int32
+	Timestamp int64
 
 	Event string
 
@@ -41,7 +41,7 @@ type SendGridEvent struct {
 
 	Urloffset string
 
-	Attempt int32
+	Attempt int64
 
 	Category string
 
@@ -91,7 +91,7 @@ func writeSendGridEvent(r *SendGridEvent, w io.Writer) error {
 		return err
 	}
 
-	err = vm.WriteInt(r.Timestamp, w)
+	err = vm.WriteLong(r.Timestamp, w)
 	if err != nil {
 		return err
 	}
@@ -156,7 +156,7 @@ func writeSendGridEvent(r *SendGridEvent, w io.Writer) error {
 		return err
 	}
 
-	err = vm.WriteInt(r.Attempt, w)
+	err = vm.WriteLong(r.Attempt, w)
 	if err != nil {
 		return err
 	}
@@ -184,7 +184,7 @@ func (r *SendGridEvent) Serialize(w io.Writer) error {
 }
 
 func (r *SendGridEvent) Schema() string {
-	return "{\"fields\":[{\"default\":\"\",\"name\":\"email\",\"type\":\"string\"},{\"default\":0,\"name\":\"timestamp\",\"type\":\"int\"},{\"default\":\"\",\"name\":\"event\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"smtp_id\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"useragent\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ip\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"sg_event_id\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"sg_message_id\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"reason\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"status\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"response\",\"type\":\"string\"},{\"default\":false,\"name\":\"tls\",\"type\":\"boolean\"},{\"default\":\"\",\"name\":\"url\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"urloffset\",\"type\":\"string\"},{\"default\":0,\"name\":\"attempt\",\"type\":\"int\"},{\"default\":\"\",\"name\":\"category\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"type\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"asm_group_id\",\"type\":\"string\"}],\"name\":\"SendGridEvent\",\"namespace\":\"xyz.atavachron\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":\"\",\"name\":\"email\",\"type\":\"string\"},{\"default\":0,\"name\":\"timestamp\",\"type\":\"long\"},{\"default\":\"\",\"name\":\"event\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"smtp_id\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"useragent\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ip\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"sg_event_id\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"sg_message_id\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"reason\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"status\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"response\",\"type\":\"string\"},{\"default\":false,\"name\":\"tls\",\"type\":\"boolean\"},{\"default\":\"\",\"name\":\"url\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"urloffset\",\"type\":\"string\"},{\"default\":0,\"name\":\"attempt\",\"type\":\"long\"},{\"default\":\"\",\"name\":\"category\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"type\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"asm_group_id\",\"type\":\"string\"}],\"name\":\"SendGridEvent\",\"namespace\":\"xyz.atavachron\",\"type\":\"record\"}"
 }
 
 func (r *SendGridEvent) SchemaName() string {
@@ -209,7 +209,7 @@ func (r *SendGridEvent) Get(i int) types.Field {
 
 	case 1:
 
-		return (*types.Int)(&r.Timestamp)
+		return (*types.Long)(&r.Timestamp)
 
 	case 2:
 
@@ -261,7 +261,7 @@ func (r *SendGridEvent) Get(i int) types.Field {
 
 	case 14:
 
-		return (*types.Int)(&r.Attempt)
+		return (*types.Long)(&r.Attempt)
 
 	case 15:
 
