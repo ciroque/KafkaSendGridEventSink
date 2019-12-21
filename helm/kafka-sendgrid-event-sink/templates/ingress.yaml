@@ -26,6 +26,7 @@ spec:
       secretName: {{ .secretName }}
   {{- end }}
 {{- end }}
+{{ if .Values.ingress.useHost }}
   rules:
   {{- range .Values.ingress.hosts }}
     - host: {{ .host | quote }}
@@ -38,4 +39,9 @@ spec:
               servicePort: {{ $svcPort }}
         {{- end }}
   {{- end }}
+{{ else }}
+  backend:
+    serviceName: {{ include "kafka-sendgrid-event-sink.fullname" . }}
+    servicePort: {{ $svcPort }}
+{{ end }}
 {{- end }}
