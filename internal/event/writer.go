@@ -1,8 +1,8 @@
 package event
 
 import (
-	"KafkaSendGridEventSink/internal/config"
-	"KafkaSendGridEventSink/pkg/eventing"
+	"kafka-sendgrid-event-sink/internal/config"
+	"kafka-sendgrid-event-sink/pkg/eventing"
 	"bytes"
 	"github.com/Sirupsen/logrus"
 	"gopkg.in/confluentinc/confluent-kafka-go.v1/kafka"

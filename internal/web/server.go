@@ -1,8 +1,8 @@
 package web
 
 import (
-	config2 "KafkaSendGridEventSink/internal/config"
-	"KafkaSendGridEventSink/pkg/eventing"
+	config2 "kafka-sendgrid-event-sink/internal/config"
+	"kafka-sendgrid-event-sink/pkg/eventing"
 	"encoding/json"
 	"fmt"
 	"github.com/Sirupsen/logrus"

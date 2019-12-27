@@ -5,7 +5,7 @@ jobs:
       - image: circleci/golang:1.9
     environment:
       GOPATH: /go
-    working_directory: /go/src/KafkaSendGridEventSink/
+    working_directory: /go/src/kafka-sendgrid-event-sink/
     steps:
       - checkout
       - run:

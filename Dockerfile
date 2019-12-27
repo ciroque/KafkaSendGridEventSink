@@ -12,17 +12,17 @@ RUN git clone https://github.com/edenhill/librdkafka.git && \
 	make && \
 	make install
 
-WORKDIR $GOPATH/src/KafkaSendGridEventSink/
+WORKDIR $GOPATH/src/kafka-sendgrid-event-sink/
 COPY . .
 
 # Fetch dependencies.
 # Using go get.
-WORKDIR $GOPATH/src/KafkaSendGridEventSink/cmd/main/
+WORKDIR $GOPATH/src/kafka-sendgrid-event-sink/cmd/main/
 RUN go get -d -v
 
 # Build the binary.
-WORKDIR $GOPATH/src/KafkaSendGridEventSink/
-RUN go build -tags static -o /go/bin/KafkaSendGridEventSink cmd/main/main.go
+WORKDIR $GOPATH/src/kafka-sendgrid-event-sink/
+RUN go build -tags static -o /go/bin/kafka-sendgrid-event-sink cmd/main/main.go
 
 ############################
 # STEP 2 build a small image
@@ -30,7 +30,7 @@ RUN go build -tags static -o /go/bin/KafkaSendGridEventSink cmd/main/main.go
 FROM alpine:3.10
 
 # Copy our static executable.
-COPY --from=builder /go/bin/KafkaSendGridEventSink /go/bin/KafkaSendGridEventSink
+COPY --from=builder /go/bin/kafka-sendgrid-event-sink /go/bin/kafka-sendgrid-event-sink
 
 # Run the hello binary.
-ENTRYPOINT ["/go/bin/KafkaSendGridEventSink"]
+ENTRYPOINT ["/go/bin/kafka-sendgrid-event-sink"]

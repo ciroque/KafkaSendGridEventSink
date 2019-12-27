@@ -1,9 +1,9 @@
 package main
 
 import (
-	config2 "KafkaSendGridEventSink/internal/config"
-	daemon2 "KafkaSendGridEventSink/internal/daemon"
-	"KafkaSendGridEventSink/pkg/eventing"
+	config2 "kafka-sendgrid-event-sink/internal/config"
+	daemon2 "kafka-sendgrid-event-sink/internal/daemon"
+	"kafka-sendgrid-event-sink/pkg/eventing"
 	"github.com/Sirupsen/logrus"
 )
 
